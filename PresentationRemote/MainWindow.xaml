@@ -1,0 +1,152 @@
+﻿<Window
+    x:Class="PresentationRemote.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:CustomController="clr-namespace:PresentationRemote.UserControllers"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:PresentationRemote"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Presentation Remote"
+    HorizontalAlignment="Center"
+    HorizontalContentAlignment="Center"
+    Background="{StaticResource darkColor}"
+    Closed="Window_Closed"
+    ResizeMode="NoResize"
+    SizeChanged="Window_SizeChanged"
+    SizeToContent="WidthAndHeight"
+    Topmost="True"
+    WindowChrome.IsHitTestVisibleInChrome="True"
+    WindowStartupLocation="CenterScreen"
+    WindowStyle="None"
+    mc:Ignorable="d">
+    <WindowChrome.WindowChrome>
+        <WindowChrome
+            CaptionHeight="30"
+            GlassFrameThickness="0,0,0,1"
+            ResizeBorderThickness="2,0,2,2" />
+    </WindowChrome.WindowChrome>
+    <StackPanel Orientation="Vertical">
+        <!--  Top Bar  -->
+        <Grid
+            x:Name="AppBar"
+            Height="30"
+            Background="{StaticResource lightColor}"
+            MouseDown="AppBar_MouseDown">
+            <Grid VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                </Grid.ColumnDefinitions>
+
+
+                <TextBlock
+                    Padding="5"
+                    FontSize="15"
+                    Foreground="White"
+                    Text="Presentation Remote" />
+
+                <CustomController:Button
+                    x:Name="MinimizeApp"
+                    Grid.Column="2"
+                    Width="30"
+                    Click="MinimizeApp_Click"
+                    HoverColor="{StaticResource Color1}"
+                    Icon="/Assets/minimize.png" />
+                <CustomController:Button
+                    x:Name="CloseApp"
+                    Grid.Column="3"
+                    Width="30"
+                    Click="CloseApp_Click"
+                    HoverColor="{StaticResource Color2}"
+                    Icon="/Assets/close.png" />
+            </Grid>
+        </Grid>
+
+        <Grid
+            Grid.Row="1"
+            Height="300"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center">
+            <Image
+                x:Name="qrImage"
+                Grid.Row="1"
+                Margin="10"
+                HorizontalAlignment="Center" />
+        </Grid>
+
+        <StackPanel Margin="0,10" Orientation="Vertical">
+            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    FontSize="40"
+                    Foreground="{StaticResource Color1}"
+                    Text="IP: " />
+                <TextBox
+                    x:Name="server"
+                    HorizontalAlignment="Center"
+                    Background="{StaticResource darkColor}"
+                    BorderThickness="0"
+                    FontSize="40"
+                    Foreground="{StaticResource Color1}"
+                    IsReadOnly="True"
+                    Text="127.0.0.1"
+                    TextWrapping="Wrap" />
+            </StackPanel>
+
+            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    FontSize="25"
+                    Foreground="{StaticResource Color2}"
+                    Text="Password: " />
+                <TextBox
+                    x:Name="passwordTB"
+                    HorizontalAlignment="Center"
+                    Background="{StaticResource darkColor}"
+                    BorderThickness="0"
+                    FontSize="25"
+                    Foreground="{StaticResource Color2}"
+                    IsReadOnly="True"
+                    Text="asdgf1234NF"
+                    TextWrapping="Wrap" />
+            </StackPanel>
+            <TextBlock
+                x:Name="msg"
+                Padding="10"
+                HorizontalAlignment="Center"
+                FontSize="40"
+                Foreground="White"
+                Text="Recived message" />
+        </StackPanel>
+
+        <!--  Bottom Bar  -->
+        <Grid Height="30" Background="{StaticResource lightColor}">
+            <StackPanel
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Orientation="Horizontal">
+                <TextBlock
+                    FontSize="12"
+                    Foreground="White"
+                    Text="By Hassan Eltantawy" />
+                <TextBlock
+                    FontSize="12"
+                    Foreground="White"
+                    Text=" | Version 1.0.0" />
+                <TextBlock
+                    FontSize="12"
+                    Foreground="{StaticResource Color2}"
+                    Text=" | live on Port:" />
+                <TextBlock
+                    x:Name="portTB"
+                    FontSize="12"
+                    Foreground="{StaticResource Color2}"
+                    Text="0000" />
+            </StackPanel>
+
+        </Grid>
+
+    </StackPanel>
+</Window>

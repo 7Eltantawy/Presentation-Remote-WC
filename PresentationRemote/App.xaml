@@ -1,0 +1,14 @@
+﻿<Application x:Class="PresentationRemote.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:PresentationRemote"
+             Startup="Application_Startup"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <SolidColorBrush x:Key="darkColor" Color="#082032" />
+        <SolidColorBrush x:Key="meduimColor" Color="#353535" />
+        <SolidColorBrush x:Key="lightColor" Color="#082054" />
+        <SolidColorBrush x:Key="Color1" Color="#3C78D7" />
+        <SolidColorBrush x:Key="Color2" Color="#EE5856" />
+    </Application.Resources>
+</Application>
