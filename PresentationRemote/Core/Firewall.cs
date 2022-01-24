@@ -41,7 +41,7 @@ namespace PresentationRemote.Core
             catch (Exception e)
             {
 
-                MessageBox.Show("Firewall Exception:\n" + e.Message.ToString());
+                //MessageBox.Show("Firewall Exception:\n" + e.Message.ToString());
             }
 
 
