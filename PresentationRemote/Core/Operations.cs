@@ -21,11 +21,57 @@ namespace PresentationRemote.Core
             }
 
         }
-        public static string GetMsg(this string txt)
+        public static string GetKey(this string txt)
         {
             try
             {
                 return txt.Split(',')[1];
+            }
+            catch (Exception)
+            {
+                return "";
+            }
+        }
+
+        private static string GetMouseInfo(this string txt)
+        {
+            try
+            {
+                return txt.Split(',')[2];
+            }
+            catch (Exception)
+            {
+                return "";
+            }
+        }
+
+        public static string GetMouseX(this string txt)
+        {
+            try
+            {
+                return txt.GetMouseInfo().Split('*')[0];
+            }
+            catch (Exception)
+            {
+                return "";
+            }
+        }
+        public static string GetMouseY(this string txt)
+        {
+            try
+            {
+                return txt.GetMouseInfo().Split('*')[1];
+            }
+            catch (Exception)
+            {
+                return "";
+            }
+        }
+        public static string GetMouseClick(this string txt)
+        {
+            try
+            {
+                return txt.GetMouseInfo().Split('*')[2];
             }
             catch (Exception)
             {

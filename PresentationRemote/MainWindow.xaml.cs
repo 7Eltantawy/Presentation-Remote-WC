@@ -1,5 +1,6 @@
 ﻿using PresentationRemote.Core;
 using System;
+using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -21,8 +22,12 @@ namespace PresentationRemote
         string data = "";
         private static string allRecivedTxt = "";
         //
-        private readonly System.Windows.Forms.NotifyIcon appNotificationIcon = new ();
+        int curMouseX = 0, curMouseY = 0;
+        int mouseSpeed = 1;
+        //
+        private readonly System.Windows.Forms.NotifyIcon appNotificationIcon = new();
         private readonly string password;
+        //
         public MainWindow()
         {
             InitializeComponent();
@@ -37,14 +42,16 @@ namespace PresentationRemote
             portTB.Text = Port.ToString();
             //
             qrImage.Source = (password + "," + Server).GenerateQRImage();
-      
+
             //
             AppNotifyIconSetup();
+            //
+            updateUI();
         }
 
 
 
-       
+
         public static string GetLocalIPAddress()
         {
             try
@@ -64,15 +71,25 @@ namespace PresentationRemote
                 System.Windows.MessageBox.Show(e.Message.ToString());
                 return "";
             }
-         
+
         }
 
-        int i = 10;
+        void updateUI()
+        {
+            //
+            passwordTB.Text = password;
+            //
+            mouseXTB.Text = curMouseX.ToString();
+            mouseYTB.Text = curMouseY.ToString();
+            //
+            mouseSpeedTB.Text = mouseSpeed.ToString();
+        }
+
         void Connect()
         {
             try
             {
-        
+
                 Client.BeginReceive(new AsyncCallback(Recive), null);
             }
             catch (Exception ex)
@@ -81,7 +98,63 @@ namespace PresentationRemote
                 allRecivedTxt += ex.Message.ToString();
             }
         }
+        void HandleRecivedMessages(string data)
+        {
+            //
+            //https://docs.microsoft.com/en-us/dotnet/api/system.windows.forms.sendkeys?view=windowsdesktop-6.0
+            //
+            //Handle Keys
+            if (data.GetKey().ToString() == "Down")
+            {
+                SendKeys.SendWait("{DOWN}");
+            }
+            else if (data.GetKey().ToString() == "Up")
+            {
+                SendKeys.SendWait("{UP}");
+            }
+            else if (data.GetKey().ToString() == "Right")
+            {
+                SendKeys.SendWait("{RIGHT}");
+            }
+            else if(data.GetKey().ToString() == "Left")
+            {
+                SendKeys.SendWait("{LEFT}");
+            }
+            else if (data.GetKey().ToString() == "Connected")
+            {
+                msg.Text = "Connected";
+                MinimizeAppToNotifyIcon();
+                //this.WindowState = WindowState.Minimized;
+            }
+            else if (data.GetKey().ToString() == "Disconnected")
+            {
+                msg.Text = "Disconnected";
+                ReturnAppToNoraml();
+            }
 
+            //Handle Mouse
+            int mouseX = 0, mouseY = 0;
+            int.TryParse(data.GetMouseX().ToString(), out mouseX);
+            int.TryParse(data.GetMouseY().ToString(), out mouseY);
+            if(mouseX != 0 || mouseY != 0)
+            {
+                curMouseX += mouseX * mouseSpeed;
+                curMouseY += mouseY * mouseSpeed;
+                MoveCursor(curMouseX, curMouseY);
+            }
+       
+           
+            if (data.GetMouseClick().ToString() == "L")
+            {
+                MouseMovement.LeftMouseClick();
+            }
+            else if (data.GetMouseClick().ToString() == "R")
+            {
+                MouseMovement.RightMouseClick();
+            }
+            //
+            updateUI();
+        }
         void Recive(IAsyncResult result)
         {
             IPEndPoint RemoteIP = new IPEndPoint(IPAddress.Any, Port);
@@ -96,31 +169,38 @@ namespace PresentationRemote
                 {
                     allRecivedTxt += "\nRecived data: " + data;
                     //msg.Text =   "Pass: "+ Operations.getPassword(data) + " Msg: "+ Operations.getMsg(data);
-                    msg.Text = data.GetMsg();
+                    //msg.Text = data.GetKey();
+                    //msg.Text = data;
                 }));
+
                 this.Dispatcher.Invoke(new(delegate
                 {
-                    if (data.GetMsg().ToString() == "Next")
-                    {
-                        SendKeys.SendWait("{DOWN}");
-
-                    }
-                    else if (data.GetMsg().ToString() == "Previous")
-                    {
-                        SendKeys.SendWait("{UP}");
-                    }
-                    else if (data.GetMsg().ToString() == "Connected")
-                    {
-                        MinimizeAppToNotifyIcon();
-                        //this.WindowState = WindowState.Minimized;
-                    }
+                    HandleRecivedMessages(data);
                 }));
+
+                //this.Dispatcher.Invoke(new(delegate
+                //{
+                //    if (data.GetKey().ToString() == "Next")
+                //    {
+                //        SendKeys.SendWait("{DOWN}");
+
+                //    }
+                //    else if (data.GetKey().ToString() == "Previous")
+                //    {
+                //        SendKeys.SendWait("{UP}");
+                //    }
+
+                //    else if (data.GetKey().ToString() == "Connected")
+                //    {
+                //        MinimizeAppToNotifyIcon();
+                //        //this.WindowState = WindowState.Minimized;
+                //    }
+                //}));
 
             }
             Client.BeginReceive(new AsyncCallback(Recive), null);
             //
-            i++;
-            MoveCursor(i, i);
+
         }
 
 
@@ -159,7 +239,7 @@ namespace PresentationRemote
             appNotificationIcon.Icon = new System.Drawing.Icon("app_icon.ico");
             appNotificationIcon.Visible = false;
             appNotificationIcon.Text = "Presentation Remote";
-            appNotificationIcon.DoubleClick += new System.EventHandler(this.AppNotificationIcon_DoubleClick);
+            appNotificationIcon.Click += new System.EventHandler(this.AppNotificationIcon_DoubleClick);
 
         }
 
@@ -194,7 +274,15 @@ namespace PresentationRemote
                 //ShowInTaskbar = false;
             }
         }
-        private void MoveCursor(int x,int y)
+
+        private void mouseSpeedTB_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+             int.TryParse( mouseSpeedTB.Text,out mouseSpeed);
+        }
+
+    
+
+        private void MoveCursor(int x, int y)
         {
             MouseMovement.SetCursorPos(x, y);
         }

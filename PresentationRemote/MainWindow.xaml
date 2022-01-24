@@ -7,6 +7,7 @@
     xmlns:local="clr-namespace:PresentationRemote"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="Presentation Remote"
+    Width="350"
     HorizontalAlignment="Center"
     HorizontalContentAlignment="Center"
     Background="{StaticResource darkColor}"
@@ -112,13 +113,68 @@
                     Text="asdgf1234NF"
                     TextWrapping="Wrap" />
             </StackPanel>
-            <TextBlock
-                x:Name="msg"
-                Padding="10"
-                HorizontalAlignment="Center"
-                FontSize="40"
-                Foreground="White"
-                Text="Recived message" />
+
+            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    FontSize="15"
+                    Foreground="{StaticResource Color2}"
+                    Text="mouseX: " />
+                <TextBlock
+                    x:Name="mouseXTB"
+                    HorizontalAlignment="Center"
+                    FontSize="15"
+                    Foreground="{StaticResource Color1}"
+                    Text="mouseY: " />
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    FontSize="15"
+                    Foreground="{StaticResource Color1}"
+                    Text="          " />
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    FontSize="15"
+                    Foreground="{StaticResource Color2}"
+                    Text="mouseY: " />
+                <TextBlock
+                    x:Name="mouseYTB"
+                    HorizontalAlignment="Center"
+                    FontSize="15"
+                    Foreground="{StaticResource Color1}"
+                    Text="mouseY: " />
+
+            </StackPanel>
+            <Grid Height="10" />
+            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    FontSize="25"
+                    Foreground="{StaticResource Color2}"
+                    Text="Mouse Speed: " />
+                <TextBox
+                    x:Name="mouseSpeedTB"
+                    HorizontalAlignment="Center"
+                    Background="{StaticResource darkColor}"
+                    BorderThickness="0"
+                    FontSize="25"
+                    Foreground="{StaticResource Color1}"
+                    IsReadOnly="False"
+                    Text="7"
+                    TextChanged="mouseSpeedTB_TextChanged"
+                    TextWrapping="Wrap" />
+            </StackPanel>
+
+            <Viewbox Width="250">
+                <TextBlock
+                    x:Name="msg"
+                    Padding="10"
+                    HorizontalAlignment="Center"
+                    FontSize="40"
+                    Foreground="White"
+                    Text="Recived message" />
+            </Viewbox>
+
         </StackPanel>
 
         <!--  Bottom Bar  -->
