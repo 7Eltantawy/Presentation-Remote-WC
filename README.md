@@ -1,4 +1,5 @@
 [![version](https://img.shields.io/badge/version-1.0.0-yellow.svg)](https://github.com/HasanEltantawy/Presentation-Remote-WC)
+![GitHub all releases](https://img.shields.io/github/downloads/HasanEltantawy/Presentation-Remote-WC/total?color=green&label=Total%20Downloads)
 
 <p align="Left">
   <img src="https://user-images.githubusercontent.com/50374022/150793311-95cd0e16-a144-48d5-8bb7-c2aefc868e97.png" width="100" >
